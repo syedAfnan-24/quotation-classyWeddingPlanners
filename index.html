@@ -38,6 +38,8 @@
     <textarea id="imageDescription" rows="4" cols="50" placeholder="Describe the image(s)..." required></textarea><br><br>
 
     <button type="submit">Upload</button>
+    <button onclick="printPage()">Print Page</button>
+
   </form>
 
   <!-- Section to display the uploaded images and descriptions -->
@@ -85,6 +87,11 @@
       // Clear the form after uploading
       document.getElementById('uploadForm').reset();
     });
+
+    function printPage() {
+    window.print();
+    }
+
   </script>
 </body>
 </html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classy Weddings Quotation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .preview {
+      margin-top: 20px;
+    }
+    .preview-item {
+      margin-bottom: 20px;
+    }
+    .preview img {
+      max-width: 100%;
+      height: auto;
+    }
+    .preview p {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Upload Images with Descriptions</h1>
+  
+  <!-- Form to upload image and description -->
+  <form id="uploadForm">
+    <label for="imageUpload">Select Images:</label>
+    <input type="file" id="imageUpload" accept="image/*" multiple required><br><br>
+
+    <label for="imageDescription">Add a Description:</label>
+    <textarea id="imageDescription" rows="4" cols="50" placeholder="Describe the image(s)..." required></textarea><br><br>
+
+    <button type="submit">Upload</button>
+  </form>
+
+  <!-- Section to display the uploaded images and descriptions -->
+  <div class="preview" id="previewSection">
+    <!-- Uploaded images and descriptions will be displayed here -->
+  </div>
+
+  <script>
+    // Handle form submission
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form from refreshing the page
+      
+      const imageFiles = document.getElementById('imageUpload').files;
+      const imageDescription = document.getElementById('imageDescription').value;
+      const previewSection = document.getElementById('previewSection');
+      
+      // Ensure at least one file is selected and description is provided
+      if (imageFiles.length > 0 && imageDescription) {
+        Array.from(imageFiles).forEach(file => {
+          const reader = new FileReader();
+          
+          // When each image is loaded, display it
+          reader.onload = function(e) {
+            const imgContainer = document.createElement('div');
+            imgContainer.classList.add('preview-item');
+            
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            
+            const description = document.createElement('p');
+            description.textContent = imageDescription;
+            
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(description);
+            previewSection.appendChild(imgContainer);
+          };
+          
+          // Read each image file as a data URL
+          reader.readAsDataURL(file);
+        });
+      } else {
+        alert('Please select at least one image and add a description.');
+      }
+      
+      // Clear the form after uploading
+      document.getElementById('uploadForm').reset();
+    });
+  </script>
+</body>
+</html>
